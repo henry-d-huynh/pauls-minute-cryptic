@@ -1,12 +1,11 @@
-import {Keyboard} from "./components/keyboard/keyboard.tsx";
+import { GameScreen } from "./components/game-screen/game-screen.tsx";
 
 function App() {
-
   return (
     <>
-        <Keyboard></Keyboard>
+      <GameScreen />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

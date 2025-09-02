@@ -1,0 +1,9 @@
+.game-screen {
+  display: flex;
+  justify-content: center;
+
+  &-container {
+    max-width: 640px;
+    width: 100%;
+  }
+}
