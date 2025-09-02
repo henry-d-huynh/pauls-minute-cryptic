@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 :root {
   font-family: "Mulish", sans-serif;
   background-color: rgb(173 211 255);
+}
+
+body {
+  padding: 0;
+  margin: 0;
 }

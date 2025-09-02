@@ -1,0 +1,27 @@
+.nav {
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  gap: 1rem;
+
+  &-button {
+    padding: 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+
+    &-date {
+      font-weight: bold;
+    }
+    &-author {
+      font-size: 12px;
+    }
+  }
+
+  &-logo {
+  }
+}
