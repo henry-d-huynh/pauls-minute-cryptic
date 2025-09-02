@@ -154,13 +154,17 @@ const row3: Keys[] = [
 const rows: Keys[][] = [row1, row2, row3];
 
 export const Keyboard = (): ReactElement => {
-  const renderKeyboard = rows.map((row) => {
+  const renderKeyboard = rows.map((row, index) => {
     const renderKeys = row.map((key) => (
       <div className={styles.keyboardRowKey} key={key.id}>
         {key.display}
       </div>
     ));
-    return <div className={styles.keyboardRow}>{renderKeys}</div>;
+    return (
+      <div className={styles.keyboardRow} key={`keyboard-row-${index}`}>
+        {renderKeys}
+      </div>
+    );
   });
 
   return <div className={styles.keyboard}>{renderKeyboard}</div>;
