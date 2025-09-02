@@ -1,8 +1,10 @@
+import {Keyboard} from "./components/keyboard/keyboard.tsx";
+
 function App() {
 
   return (
     <>
-        Paul's birthday minute cryptic
+        <Keyboard></Keyboard>
     </>
   )
 }
