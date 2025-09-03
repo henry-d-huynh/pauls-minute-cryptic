@@ -29,7 +29,9 @@ export const GameScreenNav = (): ReactElement => {
 
       <div className={styles.navInfo}>
         <div className={styles.navInfoDate}>13 September, 2025</div>
-        <div className={styles.navInfoAuthor}>By Chrystal Chea</div>
+        <div className={styles.navInfoAuthor}>
+          By Chrystal Chea & King Henners
+        </div>
       </div>
 
       <div className={styles.navLogo}>
