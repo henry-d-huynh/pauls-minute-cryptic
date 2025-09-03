@@ -4,6 +4,8 @@ $selected-background-colour: rgb(245 209 253);
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  margin-top: 1rem;
   align-items: center;
   container-type: inline-size;
   --box: clamp(1px, 100cqmin, 46px);
