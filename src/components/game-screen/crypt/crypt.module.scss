@@ -5,6 +5,7 @@ $selected-background-colour: rgb(245 209 253);
   display: flex;
   flex-direction: column;
   align-items: center;
+  --box: clamp(12px, 10dvw, 46px);
 
   &-input {
     display: flex;
@@ -15,12 +16,25 @@ $selected-background-colour: rgb(245 209 253);
     &-button {
       outline-offset: -2px;
       outline: black solid 4px;
-      width: 100%;
-      max-width: 46px;
-      max-height: 46px;
+      width: var(--box);
       aspect-ratio: 1/1;
       background-color: white;
       cursor: pointer;
+      container-type: size;
+
+      font-family: "Sansita", sans-serif;
+      font-weight: 800;
+      font-style: italic;
+
+      display: grid;
+      place-items: center;
+      padding: 0;
+
+      &-text {
+        color: black;
+        font-size: calc(var(--box) * 0.7);
+        transform: translateY(-0.25rem);
+      }
 
       &:active {
         background-color: $selected-background-colour;
