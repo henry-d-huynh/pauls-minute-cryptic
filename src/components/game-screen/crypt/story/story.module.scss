@@ -3,7 +3,10 @@
 
   &-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
+    row-gap: 30px;
+    justify-content: center;
 
     &-point {
       position: relative;
