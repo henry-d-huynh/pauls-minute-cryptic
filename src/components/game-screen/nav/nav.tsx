@@ -44,7 +44,7 @@ export const GameScreenNav = (): ReactElement => {
           data-sentry-source-file="LogoWhiteShadow.tsx"
         >
           <g
-            clip-path="url(#clip0_10114_10166)"
+            clipPath="url(#clip0_10114_10166)"
             data-sentry-element="g"
             data-sentry-source-file="LogoWhiteShadow.tsx"
           >
@@ -61,8 +61,8 @@ export const GameScreenNav = (): ReactElement => {
               data-sentry-source-file="LogoWhiteShadow.tsx"
             ></path>
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M350.008 28H30.0078C28.9032 28 28.0078 28.8954 28.0078 30V350C28.0078 351.105 28.9032 352 30.0078 352H350.008C351.112 352 352.008 351.105 352.008 350V30C352.008 28.8954 351.112 28 350.008 28ZM30.0078 0C13.4393 0 0.0078125 13.4315 0.0078125 30V350C0.0078125 366.569 13.4393 380 30.0078 380H350.008C366.576 380 380.008 366.569 380.008 350V30C380.008 13.4315 366.576 0 350.008 0H30.0078Z"
               fill="black"
               data-sentry-element="path"
