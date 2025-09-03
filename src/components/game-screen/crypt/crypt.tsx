@@ -1,5 +1,6 @@
 import styles from "./crypt.module.scss";
 import type { ReactElement } from "react";
+import { Story } from "./story/story.tsx";
 
 export const GameCrypt = (): ReactElement => {
   return (
@@ -30,6 +31,7 @@ export const GameCrypt = (): ReactElement => {
           <span className={styles.cryptInputButtonText}>e</span>
         </button>
       </div>
+      <Story />
     </div>
   );
 };
