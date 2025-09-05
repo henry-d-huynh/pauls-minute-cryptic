@@ -1,11 +1,18 @@
 import styles from "./actions.module.scss";
 import type { ReactElement } from "react";
 
-export const Actions = (): ReactElement => {
+type Props = {
+  toggleModal: (isVisible?: boolean) => void;
+};
+
+export const Actions = ({ toggleModal }: Props): ReactElement => {
   return (
     <div className={styles.actions}>
       <button
         className={`${styles.actionsButton} ${styles.actionsButtonYellow}`}
+        onClick={() => {
+          toggleModal(true);
+        }}
       >
         <p className={styles.actionsButtonText}>hints</p>
       </button>

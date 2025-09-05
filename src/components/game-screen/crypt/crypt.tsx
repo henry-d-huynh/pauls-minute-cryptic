@@ -3,7 +3,11 @@ import type { ReactElement } from "react";
 import { Story } from "./story/story.tsx";
 import { Actions } from "./action/actions.tsx";
 
-export const GameCrypt = (): ReactElement => {
+type Props = {
+  toggleModal: (isVisible?: boolean) => void;
+};
+
+export const GameCrypt = ({ toggleModal }: Props): ReactElement => {
   return (
     <div className={styles.crypt}>
       <div className={styles.cryptInput}>
@@ -33,7 +37,7 @@ export const GameCrypt = (): ReactElement => {
         </button>
       </div>
       <Story />
-      <Actions />
+      <Actions toggleModal={toggleModal} />
     </div>
   );
 };

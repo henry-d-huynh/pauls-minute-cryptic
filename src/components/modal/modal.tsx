@@ -1,10 +1,19 @@
 import styles from "./modal.module.scss";
 import type { ReactElement } from "react";
 
-export const Modal = (): ReactElement => {
+type Props = {
+  toggleModal: (isVisible?: boolean) => void;
+};
+
+export const Modal = ({ toggleModal }: Props): ReactElement => {
   return (
     <div className={styles.modal}>
-      <div className={styles.modalOverlay}></div>
+      <div
+        className={styles.modalOverlay}
+        onClick={() => {
+          toggleModal(false);
+        }}
+      ></div>
       <div className={styles.modalDialog}>
         <div></div>
         <div className={styles.modalDialogBox}>
