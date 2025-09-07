@@ -29,21 +29,66 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       styles.modalDialogBoxRendererContentBoxButtonsButton
                     }
                   >
-                    show indicator
+                    <span
+                      className={
+                        styles.modalDialogBoxRendererContentBoxButtonsButtonWrapper
+                      }
+                    >
+                      <span
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightIndicator}`}
+                      ></span>
+                      <span
+                        className={
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperText
+                        }
+                      >
+                        show indicator
+                      </span>
+                    </span>
                   </button>
                   <button
                     className={
                       styles.modalDialogBoxRendererContentBoxButtonsButton
                     }
                   >
-                    show fodder
+                    <span
+                      className={
+                        styles.modalDialogBoxRendererContentBoxButtonsButtonWrapper
+                      }
+                    >
+                      <span
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightFodder}`}
+                      ></span>
+                      <span
+                        className={
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperText
+                        }
+                      >
+                        show fodder
+                      </span>
+                    </span>
                   </button>
                   <button
                     className={
                       styles.modalDialogBoxRendererContentBoxButtonsButton
                     }
                   >
-                    show definition
+                    <span
+                      className={
+                        styles.modalDialogBoxRendererContentBoxButtonsButtonWrapper
+                      }
+                    >
+                      <span
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightDefinition}`}
+                      ></span>
+                      <span
+                        className={
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperText
+                        }
+                      >
+                        show definition
+                      </span>
+                    </span>
                   </button>
                 </div>
                 <div className={styles.modalDialogBoxRendererContentBoxButtons}>
@@ -52,7 +97,22 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       styles.modalDialogBoxRendererContentBoxButtonsButton
                     }
                   >
-                    show letter
+                    <span
+                      className={
+                        styles.modalDialogBoxRendererContentBoxButtonsButtonWrapper
+                      }
+                    >
+                      <span
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightShowLetter}`}
+                      ></span>
+                      <span
+                        className={
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperText
+                        }
+                      >
+                        show letter
+                      </span>
+                    </span>
                   </button>
                 </div>
               </div>
