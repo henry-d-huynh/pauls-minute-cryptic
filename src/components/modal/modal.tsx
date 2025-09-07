@@ -15,7 +15,7 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
         }}
       ></div>
       <div className={styles.modalDialog}>
-        <div></div>
+        <div className={styles.modalDialogBackground}></div>
         <div className={styles.modalDialogBox}>
           <div className={styles.modalDialogBoxRenderer}>
             <div className={styles.modalDialogBoxRendererContent}>

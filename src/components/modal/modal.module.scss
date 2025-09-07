@@ -20,6 +20,19 @@
     justify-content: center;
     box-sizing: border-box;
 
+    &-background {
+      position: absolute;
+      width: 100vw;
+      left: 0;
+      top: -5rem;
+      bottom: -1rem;
+      background-image: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(173, 211, 255, 0.75) 50%
+      );
+    }
+
     &-box {
       //width: 100%;
       z-index: 10;
