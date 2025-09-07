@@ -1,5 +1,6 @@
 import styles from "./modal.module.scss";
 import type { ReactElement } from "react";
+import clsx from "clsx";
 
 type Props = {
   toggleModal: (isVisible?: boolean) => void;
@@ -66,7 +67,11 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightIndicator} ${styles.highlightScale}`}
+                        className={clsx(
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight,
+                          styles.highlightIndicator,
+                          styles.highlightScale,
+                        )}
                       ></span>
                       <span
                         className={
@@ -88,7 +93,11 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightFodder} ${styles.highlightScale}`}
+                        className={clsx(
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight,
+                          styles.highlightFodder,
+                          styles.highlightScale,
+                        )}
                       ></span>
                       <span
                         className={
@@ -110,7 +119,11 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightDefinition} ${styles.highlightScale}`}
+                        className={clsx(
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight,
+                          styles.highlightDefinition,
+                          styles.highlightScale,
+                        )}
                       ></span>
                       <span
                         className={
@@ -134,7 +147,11 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightShowLetter} ${styles.highlightScale}`}
+                        className={clsx(
+                          styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight,
+                          styles.highlightShowLetter,
+                          styles.highlightScale,
+                        )}
                       ></span>
                       <span
                         className={
