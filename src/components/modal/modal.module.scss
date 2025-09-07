@@ -32,6 +32,7 @@
         width: 100%;
 
         &-content {
+          padding: 1rem;
           width: 100%;
           max-width: 400px;
           border-radius: 16px;
@@ -44,7 +45,7 @@
           box-shadow: 3px 3px black;
 
           &-title {
-            padding: 1rem;
+            padding: 1rem 0;
           }
 
           &-box {
@@ -56,6 +57,11 @@
               box-sizing: border-box;
               display: flex;
               flex-direction: column;
+              padding: 0.5rem 0;
+
+              &:last-child {
+                border-top: 2px solid rgb(244 245 246);
+              }
 
               &-button {
                 font-family: "Sansita", sans-serif;
@@ -63,7 +69,7 @@
                 font-style: italic;
                 font-size: 1.25rem;
                 text-align: start;
-                padding: 1rem;
+                padding: 1rem 0;
                 background: none;
                 border: none;
                 cursor: pointer;
@@ -72,6 +78,12 @@
                 &-wrapper {
                   position: relative;
 
+                  &:hover {
+                    .highlight-scale {
+                      transform: scaleX(1.05);
+                    }
+                  }
+
                   &-highlight {
                     transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
                     border-radius: 0.125rem;
@@ -79,7 +91,7 @@
                     z-index: 0;
                     right: 0;
                     left: 0;
-                    bottom: 1px;
+                    bottom: -1px;
                     position: absolute;
                   }
 
@@ -110,4 +122,8 @@
 }
 .highlight-show-letter {
   background-color: rgb(255 242 177);
+}
+
+.highlight-scale {
+  transform: scaleX(1);
 }

@@ -35,7 +35,7 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightIndicator}`}
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightIndicator} ${styles.highlightScale}`}
                       ></span>
                       <span
                         className={
@@ -57,7 +57,7 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightFodder}`}
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightFodder} ${styles.highlightScale}`}
                       ></span>
                       <span
                         className={
@@ -79,7 +79,7 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightDefinition}`}
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightDefinition} ${styles.highlightScale}`}
                       ></span>
                       <span
                         className={
@@ -103,7 +103,7 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
                       }
                     >
                       <span
-                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightShowLetter}`}
+                        className={`${styles.modalDialogBoxRendererContentBoxButtonsButtonWrapperHighlight} ${styles.highlightShowLetter} ${styles.highlightScale}`}
                       ></span>
                       <span
                         className={
