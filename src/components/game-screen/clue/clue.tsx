@@ -1,13 +1,18 @@
 import styles from "./clue.module.scss";
-import { type ReactElement, useState } from "react";
+import { type ReactElement } from "react";
+import type { HintState } from "../../../App.tsx";
 
-type HintState = "hide" | "show";
+type Props = {
+  indicatorState: HintState;
+  fodderState: HintState;
+  definitionState: HintState;
+};
 
-export const GameClue = (): ReactElement => {
-  const [indicatorState] = useState<HintState>("hide");
-  const [fodderState] = useState<HintState>("hide");
-  const [definitionState] = useState<HintState>("hide");
-
+export const GameClue = ({
+  indicatorState,
+  fodderState,
+  definitionState,
+}: Props): ReactElement => {
   const getIndicatorElement = () => {
     switch (indicatorState) {
       case "hide":

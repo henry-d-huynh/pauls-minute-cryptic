@@ -1,14 +1,23 @@
 import styles from "./modal.module.scss";
 import { type ReactElement, useState } from "react";
 import clsx from "clsx";
+import type { HintState } from "../../App.tsx";
 
 type Props = {
   toggleModal: (isVisible?: boolean) => void;
+  setIndicatorState: (hintState: HintState) => void;
+  setFodderState: (state: HintState) => void;
+  setDefinitionState: (state: HintState) => void;
 };
 
 type ModalState = "actions" | "indicator" | "fodder" | "definition";
 
-export const Modal = ({ toggleModal }: Props): ReactElement => {
+export const Modal = ({
+  toggleModal,
+  setIndicatorState,
+  setFodderState,
+  setDefinitionState,
+}: Props): ReactElement => {
   const [modalState, setModalState] = useState<ModalState>("actions");
 
   const getModalContent = () => {
@@ -18,6 +27,9 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
           <ModalActions
             toggleModal={toggleModal}
             setModalState={setModalState}
+            setIndicatorState={setIndicatorState}
+            setFodderState={setFodderState}
+            setDefinitionState={setDefinitionState}
           />
         );
       case "indicator":
@@ -69,8 +81,9 @@ export const Modal = ({ toggleModal }: Props): ReactElement => {
 };
 
 type ActionProps = {
+  toggleModal: (isVisible?: boolean) => void;
   setModalState: (modalState: ModalState) => void;
-} & Props;
+};
 
 const ModalNavBar = ({
   toggleModal,
@@ -196,7 +209,10 @@ const ModalDefinition = ({
 const ModalActions = ({
   toggleModal,
   setModalState,
-}: ActionProps): ReactElement => {
+  setIndicatorState,
+  setFodderState,
+  setDefinitionState,
+}: ActionProps & Props): ReactElement => {
   return (
     <>
       <div className={styles.modalDialogBoxRendererContentHeader}>
@@ -235,6 +251,7 @@ const ModalActions = ({
             className={styles.modalDialogBoxRendererContentBoxButtonsButton}
             onClick={() => {
               setModalState("indicator");
+              setIndicatorState("show");
             }}
           >
             <span
@@ -262,6 +279,7 @@ const ModalActions = ({
             className={styles.modalDialogBoxRendererContentBoxButtonsButton}
             onClick={() => {
               setModalState("fodder");
+              setFodderState("show");
             }}
           >
             <span
@@ -289,6 +307,7 @@ const ModalActions = ({
             className={styles.modalDialogBoxRendererContentBoxButtonsButton}
             onClick={() => {
               setModalState("definition");
+              setDefinitionState("show");
             }}
           >
             <span
