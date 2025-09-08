@@ -64,6 +64,12 @@
               display: grid;
               place-items: center;
 
+              &-alt {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+              }
+
               &-button {
                 display: flex;
                 place-items: center;
@@ -131,6 +137,11 @@
                   }
                 }
               }
+            }
+
+            &-text {
+              font-size: 18px;
+              line-height: 2rem;
             }
           }
         }
