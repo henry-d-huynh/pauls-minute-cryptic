@@ -3,4 +3,17 @@
   background: white;
   border-radius: 10px;
   font-size: 24px;
+  line-height: 36px;
+
+  &-indicator {
+    background-color: rgb(245 209 253);
+  }
+
+  &-fodder {
+    background-color: rgb(255 242 177);
+  }
+
+  &-definition {
+    background-color: rgb(213 232 255);
+  }
 }
