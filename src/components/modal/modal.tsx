@@ -180,7 +180,7 @@ const ModalFodder = ({
       </div>
       <div className={styles.modalDialogBoxRendererContentBox}>
         <p className={styles.modalDialogBoxRendererContentBoxText}>
-          Our fodder is “baby eats at the ritz in Carlton’s east” we’ll need to
+          Our fodder is “Baby eats at The Ritz in Carlton’s East” we’ll need to
           use this material as directed by the indicator.
         </p>
       </div>
