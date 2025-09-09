@@ -23,6 +23,8 @@ export const GameCrypt = ({
         character={character}
         isActive={isActive}
         key={`character-${index}`}
+        index={index}
+        setCursor={setCursor}
       />
     );
   });
@@ -39,21 +41,29 @@ export const GameCrypt = ({
 type InputButtonProps = {
   character: Character;
   isActive: boolean;
+  index: number;
+  setCursor: (index: number) => void;
 };
 
 const InputButton = ({
   character,
   isActive,
+  index,
+  setCursor,
 }: InputButtonProps): ReactElement => {
   const { expected, input, isRevealed } = character;
-
   const renderCharacter = isRevealed ? expected : input;
+
+  const handleClick = () => {
+    setCursor(index);
+  };
 
   return (
     <button
       className={clsx(styles.cryptInputButton, {
         [styles.cryptInputButtonActive]: isActive,
       })}
+      onClick={handleClick}
     >
       <span className={styles.cryptInputButtonText}>{renderCharacter}</span>
     </button>
