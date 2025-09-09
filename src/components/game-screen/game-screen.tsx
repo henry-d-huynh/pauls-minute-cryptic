@@ -12,6 +12,9 @@ type Props = {
   fodderState: HintState;
   definitionState: HintState;
   answerState: Answer;
+  cursor: number;
+  setCursor: (index: number) => void;
+  onKeyTap: (key: string) => void;
 };
 
 export const GameScreen = ({
@@ -20,6 +23,9 @@ export const GameScreen = ({
   fodderState,
   definitionState,
   answerState,
+  cursor,
+  setCursor,
+  onKeyTap,
 }: Props): ReactElement => {
   return (
     <div className={styles.gameScreen}>
@@ -30,8 +36,13 @@ export const GameScreen = ({
           fodderState={fodderState}
           definitionState={definitionState}
         />
-        <GameCrypt toggleModal={toggleModal} answerState={answerState} />
-        <Keyboard />
+        <GameCrypt
+          toggleModal={toggleModal}
+          answerState={answerState}
+          cursor={cursor}
+          setCursor={setCursor}
+        />
+        <Keyboard onKeyTap={onKeyTap} />
       </div>
     </div>
   );

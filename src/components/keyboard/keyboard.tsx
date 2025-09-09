@@ -146,17 +146,27 @@ const row3: Keys[] = [
   },
   {
     id: "key-backspace",
-    value: "backspace",
+    value: "Backspace",
     display: "⌫",
   },
 ];
 
 const rows: Keys[][] = [row1, row2, row3];
 
-export const Keyboard = (): ReactElement => {
+type Props = {
+  onKeyTap: (key: string) => void;
+};
+
+export const Keyboard = ({ onKeyTap }: Props): ReactElement => {
   const renderKeyboard = rows.map((row, index) => {
     const renderKeys = row.map((key) => (
-      <div className={styles.keyboardRowKey} key={key.id}>
+      <div
+        className={styles.keyboardRowKey}
+        key={key.id}
+        onClick={() => {
+          onKeyTap(key.value);
+        }}
+      >
         {key.display}
       </div>
     ));
