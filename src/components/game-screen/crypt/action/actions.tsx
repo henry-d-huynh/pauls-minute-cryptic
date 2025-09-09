@@ -19,7 +19,7 @@ export const Actions = ({ toggleModal }: Props): ReactElement => {
       </button>
       <button
         className={clsx(styles.actionsButton, styles.actionsButtonPink)}
-        disabled={false}
+        disabled={true}
         onClick={() => {
           console.log("clicked");
         }}
