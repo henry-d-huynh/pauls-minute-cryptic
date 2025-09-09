@@ -84,20 +84,38 @@ const App = (): ReactElement => {
       }
 
       if (key === "Backspace") {
-        const newAnswerState = answerState.map((character, index) => {
-          if (cursor === index) {
-            if (cursor > 0) {
-              setCursor(cursor - 1);
-            }
+        const lastIndexAlreadyDeleted =
+          answerState[answerState.length - 1].input === "";
 
+        if (cursor === answerState.length - 1 && !lastIndexAlreadyDeleted) {
+          const newAnswerState = answerState.map((character, index) => {
+            if (cursor === index) {
+              return {
+                ...character,
+                input: "",
+              };
+            }
+            return character;
+          });
+          return setAnswerState(newAnswerState);
+        }
+
+        const beforeCursor = cursor - 1;
+        const indexToDelete = beforeCursor > 0 ? beforeCursor : 0;
+
+        const newAnswerState = answerState.map((character, index) => {
+          if (indexToDelete === index) {
+            const cursorIndex = cursor - 1;
+            const targetCursorIndex = cursorIndex > 0 ? cursorIndex : 0;
+            setCursor(targetCursorIndex);
             return {
               ...character,
               input: "",
             };
           }
+
           return character;
         });
-
         setAnswerState(newAnswerState);
       }
     },
