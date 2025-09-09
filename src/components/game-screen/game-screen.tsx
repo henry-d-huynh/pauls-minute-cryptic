@@ -4,13 +4,14 @@ import { Keyboard } from "../keyboard/keyboard.tsx";
 import { GameScreenNav } from "./nav/nav.tsx";
 import { GameClue } from "./clue/clue.tsx";
 import { GameCrypt } from "./crypt/crypt.tsx";
-import type { HintState } from "../../App.tsx";
+import type { Answer, HintState } from "../../App.tsx";
 
 type Props = {
   toggleModal: (isVisible?: boolean) => void;
   indicatorState: HintState;
   fodderState: HintState;
   definitionState: HintState;
+  answerState: Answer;
 };
 
 export const GameScreen = ({
@@ -18,6 +19,7 @@ export const GameScreen = ({
   indicatorState,
   fodderState,
   definitionState,
+  answerState,
 }: Props): ReactElement => {
   return (
     <div className={styles.gameScreen}>
@@ -28,7 +30,7 @@ export const GameScreen = ({
           fodderState={fodderState}
           definitionState={definitionState}
         />
-        <GameCrypt toggleModal={toggleModal} />
+        <GameCrypt toggleModal={toggleModal} answerState={answerState} />
         <Keyboard />
       </div>
     </div>

@@ -39,7 +39,7 @@ $selected-background-colour: rgb(245 209 253);
         transform: translateY(-0.25rem);
       }
 
-      &:active {
+      &-active {
         background-color: $selected-background-colour;
       }
 
