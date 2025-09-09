@@ -38,5 +38,16 @@ $color-pink: rgb(245 209 253);
     &:hover {
       scale: 105%;
     }
+
+    &:disabled {
+      background-color: rgb(173, 211, 255);
+      opacity: 0.5;
+      box-shadow: none;
+      cursor: initial;
+
+      &:hover {
+        scale: 100%;
+      }
+    }
   }
 }
