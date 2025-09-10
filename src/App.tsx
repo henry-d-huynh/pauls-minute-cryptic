@@ -80,29 +80,56 @@ const App = (): ReactElement => {
     setIsGameOver([...isGameOver, isAnswerCorrect]);
   }, [answerState, isGameOver]);
 
+  const getNextEditableCursorPosition = useCallback(() => {
+    for (
+      let targetPosition = cursor + 1;
+      targetPosition < answerState.length;
+      targetPosition++
+    ) {
+      if (!answerState[targetPosition].isRevealed) {
+        return targetPosition;
+      }
+    }
+  }, [answerState, cursor]);
+
+  const getPreviousEditableCursorPosition = useCallback(() => {
+    for (
+      let targetPosition = cursor - 1;
+      targetPosition >= 0;
+      targetPosition--
+    ) {
+      if (!answerState[targetPosition].isRevealed) {
+        return targetPosition;
+      }
+    }
+  }, [answerState, cursor]);
+
   const moveCursor = useCallback(
     (direction: "back" | "forward") => {
       switch (direction) {
-        case "forward":
-          for (
-            let targetPosition = cursor + 1;
-            targetPosition < answerState.length;
-            targetPosition++
-          ) {
-            if (!answerState[targetPosition].isRevealed) {
-              setCursor(targetPosition);
-              break;
-            }
+        case "forward": {
+          const targetPosition = getNextEditableCursorPosition();
+
+          if (targetPosition === undefined) {
+            break;
           }
+
+          setCursor(targetPosition);
           break;
-        case "back":
-          if (cursor > 0) {
-            setCursor(cursor - 1);
+        }
+        case "back": {
+          const targetPosition = getPreviousEditableCursorPosition();
+
+          if (targetPosition === undefined) {
+            break;
           }
+
+          setCursor(targetPosition);
           break;
+        }
       }
     },
-    [answerState, cursor],
+    [getNextEditableCursorPosition, getPreviousEditableCursorPosition],
   );
 
   const inputCharacterKey = useCallback(
@@ -146,10 +173,20 @@ const App = (): ReactElement => {
       return setAnswerState(newAnswerState);
     }
 
-    const newAnswerState = clearCharacter(cursor - 1);
+    const targetPosition = getPreviousEditableCursorPosition();
+    if (targetPosition === undefined) {
+      return;
+    }
+    const newAnswerState = clearCharacter(targetPosition);
     moveCursor("back");
     return setAnswerState(newAnswerState);
-  }, [answerState, clearCharacter, cursor, moveCursor]);
+  }, [
+    answerState,
+    clearCharacter,
+    cursor,
+    getPreviousEditableCursorPosition,
+    moveCursor,
+  ]);
 
   const setCharacter = useCallback(
     (key: string) => {
