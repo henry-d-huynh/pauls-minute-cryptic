@@ -8,6 +8,7 @@ type Props = {
   setIndicatorState: (hintState: HintState) => void;
   setFodderState: (state: HintState) => void;
   setDefinitionState: (state: HintState) => void;
+  revealLetter: () => void;
 };
 
 type ModalState = "actions" | "indicator" | "fodder" | "definition";
@@ -17,6 +18,7 @@ export const Modal = ({
   setIndicatorState,
   setFodderState,
   setDefinitionState,
+  revealLetter,
 }: Props): ReactElement => {
   const [modalState, setModalState] = useState<ModalState>("actions");
 
@@ -30,6 +32,7 @@ export const Modal = ({
             setIndicatorState={setIndicatorState}
             setFodderState={setFodderState}
             setDefinitionState={setDefinitionState}
+            revealLetter={revealLetter}
           />
         );
       case "indicator":
@@ -212,6 +215,7 @@ const ModalActions = ({
   setIndicatorState,
   setFodderState,
   setDefinitionState,
+  revealLetter,
 }: ActionProps & Props): ReactElement => {
   return (
     <>
@@ -335,6 +339,7 @@ const ModalActions = ({
         <div className={styles.modalDialogBoxRendererContentBoxButtons}>
           <button
             className={styles.modalDialogBoxRendererContentBoxButtonsButton}
+            onClick={revealLetter}
           >
             <span
               className={

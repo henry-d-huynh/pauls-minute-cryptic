@@ -80,8 +80,8 @@ const InputButton = ({
   index,
   setCursor,
 }: InputButtonProps): ReactElement => {
-  const { expected, input, isRevealed } = character;
-  const renderCharacter = isRevealed ? expected : input;
+  const { expectedLetter, input, isRevealed } = character;
+  const renderCharacter = isRevealed ? expectedLetter : input;
 
   const handleClick = () => {
     setCursor(index);
@@ -91,6 +91,7 @@ const InputButton = ({
     <button
       className={clsx(styles.cryptInputButton, {
         [styles.cryptInputButtonActive]: isActive,
+        [styles.cryptInputButtonRevealed]: isRevealed,
       })}
       onClick={handleClick}
     >

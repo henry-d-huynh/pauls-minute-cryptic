@@ -1,4 +1,5 @@
 $selected-background-colour: rgb(245 209 253);
+$color-yellow: rgb(255 242 177);
 
 .crypt {
   flex: 1;
@@ -41,6 +42,10 @@ $selected-background-colour: rgb(245 209 253);
 
       &-active {
         background-color: $selected-background-colour;
+      }
+
+      &-revealed {
+        background-color: $color-yellow;
       }
 
       &:first-child {

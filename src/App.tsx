@@ -6,50 +6,52 @@ export type HintState = "show" | "hide";
 
 export type Character = {
   isRevealed: boolean;
-  expected: string;
+  expectedLetter: string;
   input: string;
 };
 
 export type Answer = Character[];
 
+const revealOrder = [2, 4, 6, 1, 3, 5, 7, 0];
+
 const answer: Answer = [
   {
-    expected: "b",
+    expectedLetter: "b",
     isRevealed: false,
     input: "",
   },
   {
-    expected: "e",
+    expectedLetter: "e",
     isRevealed: false,
     input: "",
   },
   {
-    expected: "a",
+    expectedLetter: "a",
     isRevealed: false,
     input: "",
   },
   {
-    expected: "t",
+    expectedLetter: "t",
     isRevealed: false,
     input: "",
   },
   {
-    expected: "r",
+    expectedLetter: "r",
     isRevealed: false,
     input: "",
   },
   {
-    expected: "i",
+    expectedLetter: "i",
     isRevealed: false,
     input: "",
   },
   {
-    expected: "c",
+    expectedLetter: "c",
     isRevealed: false,
     input: "",
   },
   {
-    expected: "e",
+    expectedLetter: "e",
     isRevealed: false,
     input: "",
   },
@@ -63,6 +65,9 @@ const App = (): ReactElement => {
   const [answerState, setAnswerState] = useState(answer);
   const [cursor, setCursor] = useState(0);
   const [isGameOver, setIsGameOver] = useState<boolean[]>([]);
+  const [currentLetterRevealed, setCurrentLetterRevealed] = useState<
+    undefined | number
+  >(undefined);
 
   const canCheckAnswer = answerState.every(
     (character) => character.input !== "",
@@ -70,7 +75,7 @@ const App = (): ReactElement => {
 
   const checkAnswer = useCallback(() => {
     const isAnswerCorrect = answerState.every(
-      (character) => character.input === character.expected,
+      (character) => character.input === character.expectedLetter,
     );
     setIsGameOver([...isGameOver, isAnswerCorrect]);
   }, [answerState, isGameOver]);
@@ -152,6 +157,45 @@ const App = (): ReactElement => {
     [deleteInput, inputCharacterKey],
   );
 
+  const revealLetter = useCallback(() => {
+    const allRevealed = answerState.every((character) => character.isRevealed);
+    if (allRevealed) {
+      return setIsGameOver([...isGameOver, true]);
+    }
+
+    if (currentLetterRevealed === undefined) {
+      const newAnswerState = answerState.map((character, index) => {
+        if (index === revealOrder[0]) {
+          return {
+            ...character,
+            isRevealed: true,
+            input: character.expectedLetter,
+          };
+        }
+        return character;
+      });
+
+      setAnswerState(newAnswerState);
+      setCurrentLetterRevealed(0);
+    } else {
+      const indexToReveal = currentLetterRevealed + 1;
+
+      const newAnswerState = answerState.map((character, index) => {
+        if (index === revealOrder[indexToReveal]) {
+          return {
+            ...character,
+            isRevealed: true,
+            input: character.expectedLetter,
+          };
+        }
+        return character;
+      });
+
+      setAnswerState(newAnswerState);
+      setCurrentLetterRevealed(indexToReveal);
+    }
+  }, [answerState, currentLetterRevealed, isGameOver]);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       setCharacter(event.key);
@@ -176,6 +220,7 @@ const App = (): ReactElement => {
       setIndicatorState={setIndicatorState}
       setFodderState={setFodderState}
       setDefinitionState={setDefinitionState}
+      revealLetter={revealLetter}
     />
   ) : (
     <></>
