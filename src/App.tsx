@@ -63,63 +63,81 @@ const App = (): ReactElement => {
   const [answerState, setAnswerState] = useState(answer);
   const [cursor, setCursor] = useState(0);
 
+  const moveCursor = useCallback(
+    (direction: "back" | "forward") => {
+      switch (direction) {
+        case "forward":
+          if (cursor < answerState.length - 1) {
+            setCursor(cursor + 1);
+          }
+          break;
+        case "back":
+          if (cursor > 0) {
+            setCursor(cursor - 1);
+          }
+          break;
+      }
+    },
+    [answerState.length, cursor],
+  );
+
+  const inputCharacterKey = useCallback(
+    (key: string) => {
+      const newAnswerState = answerState.map((character, index) => {
+        if (cursor === index) {
+          moveCursor("forward");
+          return {
+            ...character,
+            input: key.toLowerCase(),
+          };
+        }
+
+        return character;
+      });
+
+      setAnswerState(newAnswerState);
+    },
+    [answerState, cursor, moveCursor],
+  );
+
+  const clearCharacter = useCallback(
+    (characterIndex: number) => {
+      return answerState.map((character, index) => {
+        if (characterIndex === index) {
+          return {
+            ...character,
+            input: "",
+          };
+        }
+        return character;
+      });
+    },
+    [answerState],
+  );
+
+  const deleteInput = useCallback(() => {
+    const cursorIsEmpty = answerState[cursor].input === "";
+    if (!cursorIsEmpty) {
+      const newAnswerState = clearCharacter(cursor);
+      return setAnswerState(newAnswerState);
+    }
+
+    const newAnswerState = clearCharacter(cursor - 1);
+    moveCursor("back");
+    return setAnswerState(newAnswerState);
+  }, [answerState, clearCharacter, cursor, moveCursor]);
+
   const setCharacter = useCallback(
     (key: string) => {
       if (/^[a-zA-Z]$/.test(key)) {
-        const newAnswerState = answerState.map((character, index) => {
-          if (cursor === index) {
-            if (cursor < answerState.length - 1) {
-              setCursor(cursor + 1);
-            }
-            return {
-              ...character,
-              input: key.toLowerCase(),
-            };
-          }
-
-          return character;
-        });
-
-        setAnswerState(newAnswerState);
+        inputCharacterKey(key);
       }
 
       if (key === "Backspace") {
-        const lastIndexAlreadyDeleted =
-          answerState[answerState.length - 1].input === "";
-
-        if (cursor === answerState.length - 1 && !lastIndexAlreadyDeleted) {
-          const newAnswerState = answerState.map((character, index) => {
-            if (cursor === index) {
-              return {
-                ...character,
-                input: "",
-              };
-            }
-            return character;
-          });
-          return setAnswerState(newAnswerState);
-        }
-
-        const beforeCursor = cursor - 1;
-        const indexToDelete = beforeCursor > 0 ? beforeCursor : 0;
-
-        const newAnswerState = answerState.map((character, index) => {
-          if (indexToDelete === index) {
-            const cursorIndex = cursor - 1;
-            const targetCursorIndex = cursorIndex > 0 ? cursorIndex : 0;
-            setCursor(targetCursorIndex);
-            return {
-              ...character,
-              input: "",
-            };
-          }
-
-          return character;
-        });
-        setAnswerState(newAnswerState);
+        deleteInput();
       }
     },
-    [cursor, answerState],
+    [deleteInput, inputCharacterKey],
   );
 
   useEffect(() => {
