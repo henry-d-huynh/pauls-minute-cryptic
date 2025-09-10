@@ -84,8 +84,15 @@ const App = (): ReactElement => {
     (direction: "back" | "forward") => {
       switch (direction) {
         case "forward":
-          if (cursor < answerState.length - 1) {
-            setCursor(cursor + 1);
+          for (
+            let targetPosition = cursor + 1;
+            targetPosition < answerState.length;
+            targetPosition++
+          ) {
+            if (!answerState[targetPosition].isRevealed) {
+              setCursor(targetPosition);
+              break;
+            }
           }
           break;
         case "back":
@@ -95,7 +102,7 @@ const App = (): ReactElement => {
           break;
       }
     },
-    [answerState.length, cursor],
+    [answerState, cursor],
   );
 
   const inputCharacterKey = useCallback(
