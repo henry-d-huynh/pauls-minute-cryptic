@@ -91,6 +91,7 @@ const App = (): ReactElement => {
         return targetPosition;
       }
     }
+    return cursor;
   }, [answerState, cursor]);
 
   const getPreviousEditableCursorPosition = useCallback(() => {
@@ -103,6 +104,7 @@ const App = (): ReactElement => {
         return targetPosition;
       }
     }
+    return cursor;
   }, [answerState, cursor]);
 
   const moveCursor = useCallback(
@@ -110,21 +112,11 @@ const App = (): ReactElement => {
       switch (direction) {
         case "forward": {
           const targetPosition = getNextEditableCursorPosition();
-
-          if (targetPosition === undefined) {
-            break;
-          }
-
           setCursor(targetPosition);
           break;
         }
         case "back": {
           const targetPosition = getPreviousEditableCursorPosition();
-
-          if (targetPosition === undefined) {
-            break;
-          }
-
           setCursor(targetPosition);
           break;
         }
@@ -175,9 +167,6 @@ const App = (): ReactElement => {
     }
 
     const targetPosition = getPreviousEditableCursorPosition();
-    if (targetPosition === undefined) {
-      return;
-    }
     const newAnswerState = clearCharacter(targetPosition);
     moveCursor("back");
     return setAnswerState(newAnswerState);
@@ -208,38 +197,42 @@ const App = (): ReactElement => {
       return setIsGameOver([...isGameOver, true]);
     }
 
-    if (currentLetterRevealed === undefined) {
-      const newAnswerState = answerState.map((character, index) => {
-        if (index === revealOrder[0]) {
-          return {
-            ...character,
-            isRevealed: true,
-            input: character.expectedLetter,
-          };
-        }
-        return character;
-      });
+    const noLettersRevealed = currentLetterRevealed === undefined;
+    const indexToReveal = noLettersRevealed ? 0 : currentLetterRevealed + 1;
 
-      setAnswerState(newAnswerState);
-      setCurrentLetterRevealed(0);
-    } else {
-      const indexToReveal = currentLetterRevealed + 1;
+    const newAnswerState = answerState.map((character, index) => {
+      if (index === revealOrder[indexToReveal]) {
+        return {
+          ...character,
+          isRevealed: true,
+          input: character.expectedLetter,
+        };
+      }
+      return character;
+    });
 
-      const newAnswerState = answerState.map((character, index) => {
-        if (index === revealOrder[indexToReveal]) {
-          return {
-            ...character,
-            isRevealed: true,
-            input: character.expectedLetter,
-          };
-        }
-        return character;
-      });
+    const cursorOnReveal = revealOrder[indexToReveal] === cursor;
+    console.log({ pos: revealOrder[indexToReveal], cursor });
 
-      setAnswerState(newAnswerState);
-      setCurrentLetterRevealed(indexToReveal);
+    if (cursorOnReveal) {
+      const initialTargetPosition = getNextEditableCursorPosition();
+      const noNewNextPosition = initialTargetPosition === cursor;
+      const finalTargetPosition = noNewNextPosition
+        ? getPreviousEditableCursorPosition()
+        : initialTargetPosition;
+
+      setCursor(finalTargetPosition);
     }
-  }, [answerState, currentLetterRevealed, isGameOver]);
+
+    setAnswerState(newAnswerState);
+    setCurrentLetterRevealed(indexToReveal);
+  }, [
+    answerState,
+    currentLetterRevealed,
+    cursor,
+    getNextEditableCursorPosition,
+    isGameOver,
+  ]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
