@@ -212,7 +212,6 @@ const App = (): ReactElement => {
     });
 
     const cursorOnReveal = revealOrder[indexToReveal] === cursor;
-    console.log({ pos: revealOrder[indexToReveal], cursor });
 
     if (cursorOnReveal) {
       const initialTargetPosition = getNextEditableCursorPosition();
