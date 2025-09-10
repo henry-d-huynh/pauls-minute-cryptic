@@ -27,6 +27,7 @@ export const GameCrypt = ({
   const [animateShake, setAnimateShake] = useState<boolean>(false);
 
   useEffect(() => {
+    if (isGameOver.length === 0) return;
     if (isGameOver[isGameOver.length - 1]) return;
 
     setAnimateShake(true);
