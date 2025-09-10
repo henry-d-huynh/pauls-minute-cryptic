@@ -70,12 +70,13 @@ const App = (): ReactElement => {
   >(undefined);
 
   const canCheckAnswer = answerState.every(
-    (character) => character.input !== "",
+    (character) => character.input !== "" || character.isRevealed,
   );
 
   const checkAnswer = useCallback(() => {
     const isAnswerCorrect = answerState.every(
-      (character) => character.input === character.expectedLetter,
+      (character) =>
+        character.input === character.expectedLetter || character.isRevealed,
     );
     setIsGameOver([...isGameOver, isAnswerCorrect]);
   }, [answerState, isGameOver]);

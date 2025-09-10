@@ -84,7 +84,9 @@ const InputButton = ({
   const renderCharacter = isRevealed ? expectedLetter : input;
 
   const handleClick = () => {
-    setCursor(index);
+    if (!isRevealed) {
+      setCursor(index);
+    }
   };
 
   return (
