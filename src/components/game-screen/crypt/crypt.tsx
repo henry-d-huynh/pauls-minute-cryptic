@@ -6,9 +6,10 @@ import type { Answer, Character } from "../../../App.tsx";
 import clsx from "clsx";
 
 type Props = {
-  toggleModal: (isVisible?: boolean) => void;
   answerState: Answer;
   cursor: number;
+  canCheckAnswer: boolean;
+  toggleModal: (isVisible?: boolean) => void;
   setCursor: (index: number) => void;
 };
 
@@ -17,6 +18,7 @@ export const GameCrypt = ({
   toggleModal,
   setCursor,
   cursor,
+  canCheckAnswer,
 }: Props): ReactElement => {
   const renderButtons = answerState.map((character, index) => {
     const isActive = index === cursor;
@@ -35,7 +37,7 @@ export const GameCrypt = ({
     <div className={styles.crypt}>
       <div className={styles.cryptInput}>{renderButtons}</div>
       <Story />
-      <Actions toggleModal={toggleModal} />
+      <Actions toggleModal={toggleModal} canCheckAnswer={canCheckAnswer} />
     </div>
   );
 };

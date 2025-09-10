@@ -3,10 +3,14 @@ import type { ReactElement } from "react";
 import clsx from "clsx";
 
 type Props = {
+  canCheckAnswer: boolean;
   toggleModal: (isVisible?: boolean) => void;
 };
 
-export const Actions = ({ toggleModal }: Props): ReactElement => {
+export const Actions = ({
+  toggleModal,
+  canCheckAnswer,
+}: Props): ReactElement => {
   return (
     <div className={styles.actions}>
       <button
@@ -19,7 +23,7 @@ export const Actions = ({ toggleModal }: Props): ReactElement => {
       </button>
       <button
         className={clsx(styles.actionsButton, styles.actionsButtonPink)}
-        disabled={true}
+        disabled={!canCheckAnswer}
         onClick={() => {
           console.log("clicked");
         }}

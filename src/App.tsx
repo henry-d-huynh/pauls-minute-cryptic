@@ -63,6 +63,10 @@ const App = (): ReactElement => {
   const [answerState, setAnswerState] = useState(answer);
   const [cursor, setCursor] = useState(0);
 
+  const canCheckAnswer = answerState.every(
+    (character) => character.input !== "",
+  );
+
   const moveCursor = useCallback(
     (direction: "back" | "forward") => {
       switch (direction) {
@@ -180,6 +184,7 @@ const App = (): ReactElement => {
         cursor={cursor}
         setCursor={setCursor}
         onKeyTap={onKeyTap}
+        canCheckAnswer={canCheckAnswer}
       />
       {renderModal}
     </main>
