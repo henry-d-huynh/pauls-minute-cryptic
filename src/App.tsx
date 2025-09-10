@@ -62,10 +62,18 @@ const App = (): ReactElement => {
   const [definitionState, setDefinitionState] = useState<HintState>("hide");
   const [answerState, setAnswerState] = useState(answer);
   const [cursor, setCursor] = useState(0);
+  const [isGameOver, setIsGameOver] = useState<boolean[]>([]);
 
   const canCheckAnswer = answerState.every(
     (character) => character.input !== "",
   );
+
+  const checkAnswer = useCallback(() => {
+    const isAnswerCorrect = answerState.every(
+      (character) => character.input === character.expected,
+    );
+    setIsGameOver([...isGameOver, isAnswerCorrect]);
+  }, [answerState, isGameOver]);
 
   const moveCursor = useCallback(
     (direction: "back" | "forward") => {
@@ -185,6 +193,8 @@ const App = (): ReactElement => {
         setCursor={setCursor}
         onKeyTap={onKeyTap}
         canCheckAnswer={canCheckAnswer}
+        checkAnswer={checkAnswer}
+        isGameOver={isGameOver}
       />
       {renderModal}
     </main>

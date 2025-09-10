@@ -1,5 +1,5 @@
 import styles from "./crypt.module.scss";
-import { type ReactElement } from "react";
+import { type ReactElement, useEffect, useState } from "react";
 import { Story } from "./story/story.tsx";
 import { Actions } from "./action/actions.tsx";
 import type { Answer, Character } from "../../../App.tsx";
@@ -9,8 +9,10 @@ type Props = {
   answerState: Answer;
   cursor: number;
   canCheckAnswer: boolean;
+  isGameOver: boolean[];
   toggleModal: (isVisible?: boolean) => void;
   setCursor: (index: number) => void;
+  checkAnswer: () => void;
 };
 
 export const GameCrypt = ({
@@ -19,7 +21,20 @@ export const GameCrypt = ({
   setCursor,
   cursor,
   canCheckAnswer,
+  checkAnswer,
+  isGameOver,
 }: Props): ReactElement => {
+  const [animateShake, setAnimateShake] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isGameOver[isGameOver.length - 1]) return;
+
+    setAnimateShake(true);
+    setTimeout(() => {
+      setAnimateShake(false);
+    }, 500);
+  }, [isGameOver]);
+
   const renderButtons = answerState.map((character, index) => {
     const isActive = index === cursor;
     return (
@@ -35,9 +50,19 @@ export const GameCrypt = ({
 
   return (
     <div className={styles.crypt}>
-      <div className={styles.cryptInput}>{renderButtons}</div>
+      <div
+        className={clsx(styles.cryptInput, {
+          [styles.animateShake]: animateShake,
+        })}
+      >
+        {renderButtons}
+      </div>
       <Story />
-      <Actions toggleModal={toggleModal} canCheckAnswer={canCheckAnswer} />
+      <Actions
+        toggleModal={toggleModal}
+        canCheckAnswer={canCheckAnswer}
+        checkAnswer={checkAnswer}
+      />
     </div>
   );
 };

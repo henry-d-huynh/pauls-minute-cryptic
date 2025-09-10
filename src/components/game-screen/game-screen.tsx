@@ -13,9 +13,11 @@ type Props = {
   answerState: Answer;
   cursor: number;
   canCheckAnswer: boolean;
+  isGameOver: boolean[];
   toggleModal: (isVisible?: boolean) => void;
   setCursor: (index: number) => void;
   onKeyTap: (key: string) => void;
+  checkAnswer: () => void;
 };
 
 export const GameScreen = ({
@@ -28,6 +30,8 @@ export const GameScreen = ({
   setCursor,
   onKeyTap,
   canCheckAnswer,
+  checkAnswer,
+  isGameOver,
 }: Props): ReactElement => {
   return (
     <div className={styles.gameScreen}>
@@ -44,6 +48,8 @@ export const GameScreen = ({
           cursor={cursor}
           setCursor={setCursor}
           canCheckAnswer={canCheckAnswer}
+          checkAnswer={checkAnswer}
+          isGameOver={isGameOver}
         />
         <Keyboard onKeyTap={onKeyTap} />
       </div>
