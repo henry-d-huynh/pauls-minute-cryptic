@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const Story = ({ storyPointState }: Props): ReactElement => {
-  const renderStoryPoints = storyPointState.map((storyPoint) => {
+  const renderStoryPoints = storyPointState.map((storyPoint, index) => {
     const renderPar = storyPoint.par ? (
       <div className={styles.storyContainerPointPar}>par</div>
     ) : (
@@ -16,7 +16,7 @@ export const Story = ({ storyPointState }: Props): ReactElement => {
     );
 
     return (
-      <div className={styles.storyContainerPoint}>
+      <div className={styles.storyContainerPoint} key={`story-point-${index}`}>
         <div
           className={clsx(styles.storyContainerPointCircle, {
             [styles.storyContainerPointCircleBorder]: storyPoint.par,
