@@ -1,6 +1,7 @@
 import { GameScreen } from "./components/game-screen/game-screen.tsx";
 import { Modal } from "./components/modal/modal.tsx";
 import { type ReactElement, useCallback, useEffect, useState } from "react";
+import { GameOverScreen } from "./components/game-over-screen/game-over-screen.tsx";
 
 export type HintState = "show" | "hide";
 
@@ -109,6 +110,8 @@ const initialStoryPoints: StoryPoint[] = [
   },
 ];
 
+type AppState = "start" | "play" | "over";
+
 const App = (): ReactElement => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [indicatorState, setIndicatorState] = useState<HintState>("hide");
@@ -121,6 +124,7 @@ const App = (): ReactElement => {
     undefined | number
   >(undefined);
   const [storyPointState, setStoryPointState] = useState(initialStoryPoints);
+  const [appState, setAppState] = useState<AppState>("start");
 
   const canCheckAnswer = answerState.every(
     (character) => character.input !== "" || character.isRevealed,
@@ -148,6 +152,9 @@ const App = (): ReactElement => {
         character.input === character.expectedLetter || character.isRevealed,
     );
     setIsGameOver([...isGameOver, isAnswerCorrect]);
+    if (isAnswerCorrect) {
+      setAppState("over");
+    }
   }, [answerState, isGameOver]);
 
   const getNextEditableCursorPosition = useCallback(() => {
@@ -350,8 +357,8 @@ const App = (): ReactElement => {
     <></>
   );
 
-  return (
-    <main>
+  const startScreen = (
+    <>
       <GameScreen
         toggleModal={toggleModal}
         indicatorState={indicatorState}
@@ -367,8 +374,55 @@ const App = (): ReactElement => {
         storyPointState={storyPointState}
       />
       {renderModal}
-    </main>
+    </>
   );
+
+  const gameScreen = (
+    <>
+      <GameScreen
+        toggleModal={toggleModal}
+        indicatorState={indicatorState}
+        fodderState={fodderState}
+        definitionState={definitionState}
+        answerState={answerState}
+        cursor={cursor}
+        setCursor={setCursor}
+        onKeyTap={onKeyTap}
+        canCheckAnswer={canCheckAnswer}
+        checkAnswer={checkAnswer}
+        isGameOver={isGameOver}
+        storyPointState={storyPointState}
+      />
+      {renderModal}
+    </>
+  );
+
+  const gameOverScreen = (
+    <GameOverScreen
+      indicatorState={indicatorState}
+      fodderState={fodderState}
+      definitionState={definitionState}
+      answerState={answerState}
+      storyPointState={storyPointState}
+      isGameOver={isGameOver}
+    />
+  );
+
+  const renderScreen = (() => {
+    switch (appState) {
+      case "start": {
+        return startScreen;
+      }
+      case "play": {
+        return gameScreen;
+      }
+      case "over": {
+        return gameOverScreen;
+      }
+    }
+  })();
+
+  return <main>{renderScreen}</main>;
 };
 
 export default App;
