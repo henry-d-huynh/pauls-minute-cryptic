@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import styles from "./game-over-screen.module.scss";
-import type { Answer, HintState, StoryPoint } from "../../App.tsx";
+import type { Answer, AppState, HintState, StoryPoint } from "../../App.tsx";
 import { GameScreenNav } from "../game-screen/nav/nav.tsx";
 import { GameClue } from "../game-screen/clue/clue.tsx";
 import { InputButtons } from "../game-screen/crypt/input-buttons/input-buttons.tsx";
@@ -13,6 +13,7 @@ type Props = {
   answerState: Answer;
   storyPointState: StoryPoint[];
   isGameOver: boolean[];
+  setAppState: (state: AppState) => void;
 };
 
 export const GameOverScreen = ({
@@ -22,11 +23,12 @@ export const GameOverScreen = ({
   fodderState,
   definitionState,
   storyPointState,
+  setAppState,
 }: Props): ReactElement => {
   return (
     <div className={styles.gameScreen}>
       <div className={styles.gameScreenContainer}>
-        <GameScreenNav />
+        <GameScreenNav setAppState={setAppState} />
         <GameClue
           indicatorState={indicatorState}
           fodderState={fodderState}

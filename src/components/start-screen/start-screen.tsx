@@ -1,49 +1,14 @@
-import styles from "./nav.module.scss";
+import styles from "./start-screen.module.scss";
 import type { ReactElement } from "react";
-import type { AppState } from "../../../App.tsx";
+import type { AppState } from "../../App.tsx";
 
 type Props = {
   setAppState: (state: AppState) => void;
 };
 
-export const GameScreenNav = ({ setAppState }: Props): ReactElement => {
-  return (
+export const StartScreen = ({ setAppState }: Props): ReactElement => {
+  const navbar = (
     <div className={styles.nav}>
-      <button
-        className={styles.navButton}
-        onClick={() => {
-          setAppState("start");
-        }}
-      >
-        <svg
-          width="27"
-          height="27"
-          viewBox="0 0 27 27"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          data-sentry-element="svg"
-          data-sentry-component="BackIcon"
-          data-sentry-source-file="BackIcon.tsx"
-        >
-          <path
-            d="M24.2904 13.5026H2.70703M2.70703 13.5026L13.4987 24.2943M2.70703 13.5026L13.4987 2.71094"
-            stroke="#1E1E1E"
-            strokeWidth="4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            data-sentry-element="path"
-            data-sentry-source-file="BackIcon.tsx"
-          ></path>
-        </svg>
-      </button>
-
-      <div className={styles.navInfo}>
-        <div className={styles.navInfoDate}>13 September, 2025</div>
-        <div className={styles.navInfoAuthor}>
-          By Chrystal Chea & King Henners
-        </div>
-      </div>
-
       <div className={styles.navLogo}>
         <svg
           width="33"
@@ -106,6 +71,34 @@ export const GameScreenNav = ({ setAppState }: Props): ReactElement => {
             </clipPath>
           </defs>
         </svg>
+      </div>
+    </div>
+  );
+
+  const window = (
+    <div className={styles.window}>
+      <div className={styles.windowTitle}>Paul's Birthday Minute Cryptic</div>
+      <div className={styles.windowClue}>
+        Baby eats at The Ritz in Carlton’s East initially but nothing beats a
+        childhood home (8)
+      </div>
+      <button
+        className={styles.windowButton}
+        onClick={() => {
+          setAppState("play");
+        }}
+      >
+        play
+      </button>
+      <div className={styles.windowDate}>13 September, 2025</div>
+    </div>
+  );
+
+  return (
+    <div className={styles.screen}>
+      <div className={styles.screenContainer}>
+        {navbar}
+        {window}
       </div>
     </div>
   );

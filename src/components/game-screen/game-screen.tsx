@@ -4,7 +4,7 @@ import { Keyboard } from "../keyboard/keyboard.tsx";
 import { GameScreenNav } from "./nav/nav.tsx";
 import { GameClue } from "./clue/clue.tsx";
 import { GameCrypt } from "./crypt/crypt.tsx";
-import type { Answer, HintState, StoryPoint } from "../../App.tsx";
+import type { Answer, AppState, HintState, StoryPoint } from "../../App.tsx";
 
 type Props = {
   indicatorState: HintState;
@@ -19,6 +19,7 @@ type Props = {
   setCursor: (index: number) => void;
   onKeyTap: (key: string) => void;
   checkAnswer: () => void;
+  setAppState: (state: AppState) => void;
 };
 
 export const GameScreen = ({
@@ -34,11 +35,12 @@ export const GameScreen = ({
   checkAnswer,
   isGameOver,
   storyPointState,
+  setAppState,
 }: Props): ReactElement => {
   return (
     <div className={styles.gameScreen}>
       <div className={styles.gameScreenContainer}>
-        <GameScreenNav />
+        <GameScreenNav setAppState={setAppState} />
         <GameClue
           indicatorState={indicatorState}
           fodderState={fodderState}

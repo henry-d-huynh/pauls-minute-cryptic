@@ -2,6 +2,7 @@ import { GameScreen } from "./components/game-screen/game-screen.tsx";
 import { Modal } from "./components/modal/modal.tsx";
 import { type ReactElement, useCallback, useEffect, useState } from "react";
 import { GameOverScreen } from "./components/game-over-screen/game-over-screen.tsx";
+import { StartScreen } from "./components/start-screen/start-screen.tsx";
 
 export type HintState = "show" | "hide";
 
@@ -110,7 +111,7 @@ const initialStoryPoints: StoryPoint[] = [
   },
 ];
 
-type AppState = "start" | "play" | "over";
+export type AppState = "start" | "play" | "over";
 
 const App = (): ReactElement => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -357,25 +358,7 @@ const App = (): ReactElement => {
     <></>
   );
 
-  const startScreen = (
-    <>
-      <GameScreen
-        toggleModal={toggleModal}
-        indicatorState={indicatorState}
-        fodderState={fodderState}
-        definitionState={definitionState}
-        answerState={answerState}
-        cursor={cursor}
-        setCursor={setCursor}
-        onKeyTap={onKeyTap}
-        canCheckAnswer={canCheckAnswer}
-        checkAnswer={checkAnswer}
-        isGameOver={isGameOver}
-        storyPointState={storyPointState}
-      />
-      {renderModal}
-    </>
-  );
+  const startScreen = <StartScreen setAppState={setAppState} />;
 
   const gameScreen = (
     <>
@@ -392,6 +375,7 @@ const App = (): ReactElement => {
         checkAnswer={checkAnswer}
         isGameOver={isGameOver}
         storyPointState={storyPointState}
+        setAppState={setAppState}
       />
       {renderModal}
     </>
@@ -405,6 +389,7 @@ const App = (): ReactElement => {
       answerState={answerState}
       storyPointState={storyPointState}
       isGameOver={isGameOver}
+      setAppState={setAppState}
     />
   );
 
