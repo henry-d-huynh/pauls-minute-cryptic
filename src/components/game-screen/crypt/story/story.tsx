@@ -1,47 +1,39 @@
 import type { ReactElement } from "react";
 import styles from "./story.module.scss";
+import clsx from "clsx";
+import type { StoryPoint } from "../../../../App.tsx";
 
-export const Story = (): ReactElement => {
+type Props = {
+  storyPointState: StoryPoint[];
+};
+
+export const Story = ({ storyPointState }: Props): ReactElement => {
+  const renderStoryPoints = storyPointState.map((storyPoint) => {
+    const renderPar = storyPoint.par ? (
+      <div className={styles.storyContainerPointPar}>par</div>
+    ) : (
+      <></>
+    );
+
+    return (
+      <div className={styles.storyContainerPoint}>
+        <div
+          className={clsx(styles.storyContainerPointCircle, {
+            [styles.storyContainerPointCircleBorder]: storyPoint.par,
+            [styles.storyContainerPointCircleHinted]:
+              storyPoint.state === "hinted",
+            [styles.storyContainerPointCircleRevealed]:
+              storyPoint.state === "revealed",
+          })}
+        ></div>
+        {renderPar}
+      </div>
+    );
+  });
+
   return (
     <div className={styles.story}>
-      <div className={styles.storyContainer}>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div
-            className={`${styles.storyContainerPointCircle} ${styles.storyContainerPointCircleBorder}`}
-          ></div>
-          <div className={styles.storyContainerPointPar}>par</div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-        <div className={styles.storyContainerPoint}>
-          <div className={styles.storyContainerPointCircle}></div>
-        </div>
-      </div>
+      <div className={styles.storyContainer}>{renderStoryPoints}</div>
     </div>
   );
 };

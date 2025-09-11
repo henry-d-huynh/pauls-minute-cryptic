@@ -2,7 +2,7 @@ import styles from "./crypt.module.scss";
 import { type ReactElement, useEffect, useState } from "react";
 import { Story } from "./story/story.tsx";
 import { Actions } from "./action/actions.tsx";
-import type { Answer, Character } from "../../../App.tsx";
+import type { Answer, Character, StoryPoint } from "../../../App.tsx";
 import clsx from "clsx";
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
   cursor: number;
   canCheckAnswer: boolean;
   isGameOver: boolean[];
+  storyPointState: StoryPoint[];
   toggleModal: (isVisible?: boolean) => void;
   setCursor: (index: number) => void;
   checkAnswer: () => void;
@@ -23,6 +24,7 @@ export const GameCrypt = ({
   canCheckAnswer,
   checkAnswer,
   isGameOver,
+  storyPointState,
 }: Props): ReactElement => {
   const [animateShake, setAnimateShake] = useState<boolean>(false);
 
@@ -58,7 +60,7 @@ export const GameCrypt = ({
       >
         {renderButtons}
       </div>
-      <Story />
+      <Story storyPointState={storyPointState} />
       <Actions
         toggleModal={toggleModal}
         canCheckAnswer={canCheckAnswer}

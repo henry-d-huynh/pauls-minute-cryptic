@@ -1,3 +1,7 @@
+$color-yellow: rgb(255 242 177);
+$color-white: white;
+$color-blue: rgb(213 232 255);
+
 .story {
   padding: 1rem 0;
 
@@ -15,10 +19,20 @@
       align-items: center;
 
       &-circle {
-        background-color: rgb(213 232 255);
+        background-color: $color-blue;
         width: 20px;
         height: 20px;
         border-radius: 999999px;
+
+        &--revealed {
+          background-color: $color-yellow;
+          animation: pulseSize 1s;
+        }
+
+        &--hinted {
+          background-color: $color-white;
+          animation: pulseSize 1s;
+        }
 
         &-border {
           border: 2px solid black;
@@ -34,5 +48,17 @@
         font-style: italic;
       }
     }
+  }
+}
+
+@keyframes pulseSize {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.5);
+  }
+  to {
+    transform: scale(1);
   }
 }

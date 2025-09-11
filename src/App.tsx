@@ -57,6 +57,58 @@ const answer: Answer = [
   },
 ];
 
+export type StoryPoint = {
+  par: boolean;
+  state: "initial" | "revealed" | "hinted";
+};
+
+const initialStoryPoints: StoryPoint[] = [
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: true,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+  {
+    par: false,
+    state: "initial",
+  },
+];
+
 const App = (): ReactElement => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [indicatorState, setIndicatorState] = useState<HintState>("hide");
@@ -68,9 +120,26 @@ const App = (): ReactElement => {
   const [currentLetterRevealed, setCurrentLetterRevealed] = useState<
     undefined | number
   >(undefined);
+  const [storyPointState, setStoryPointState] = useState(initialStoryPoints);
 
   const canCheckAnswer = answerState.every(
     (character) => character.input !== "" || character.isRevealed,
+  );
+
+  const setStoryPoint = useCallback(
+    (state: "revealed" | "hinted") => {
+      const storyPointStateClone = structuredClone(storyPointState);
+
+      for (let index = 0; index < storyPointStateClone.length; index++) {
+        if (storyPointStateClone[index].state === "initial") {
+          storyPointStateClone[index].state = state;
+          break;
+        }
+      }
+
+      setStoryPointState(storyPointStateClone);
+    },
+    [storyPointState],
   );
 
   const checkAnswer = useCallback(() => {
@@ -223,6 +292,7 @@ const App = (): ReactElement => {
       setCursor(finalTargetPosition);
     }
 
+    setStoryPoint("revealed");
     setAnswerState(newAnswerState);
     setCurrentLetterRevealed(indexToReveal);
   }, [
@@ -230,7 +300,9 @@ const App = (): ReactElement => {
     currentLetterRevealed,
     cursor,
     getNextEditableCursorPosition,
+    getPreviousEditableCursorPosition,
     isGameOver,
+    setStoryPoint,
   ]);
 
   useEffect(() => {
@@ -251,12 +323,27 @@ const App = (): ReactElement => {
     setCharacter(key);
   };
 
+  const handleSetIndicatorState = (state: HintState) => {
+    setIndicatorState(state);
+    setStoryPoint("hinted");
+  };
+
+  const handleSetFodderState = (state: HintState) => {
+    setFodderState(state);
+    setStoryPoint("hinted");
+  };
+
+  const handleSetDefinitionState = (state: HintState) => {
+    setDefinitionState(state);
+    setStoryPoint("hinted");
+  };
+
   const renderModal = isModalVisible ? (
     <Modal
       toggleModal={toggleModal}
-      setIndicatorState={setIndicatorState}
-      setFodderState={setFodderState}
-      setDefinitionState={setDefinitionState}
+      setIndicatorState={handleSetIndicatorState}
+      setFodderState={handleSetFodderState}
+      setDefinitionState={handleSetDefinitionState}
       revealLetter={revealLetter}
     />
   ) : (
@@ -277,6 +364,7 @@ const App = (): ReactElement => {
         canCheckAnswer={canCheckAnswer}
         checkAnswer={checkAnswer}
         isGameOver={isGameOver}
+        storyPointState={storyPointState}
       />
       {renderModal}
     </main>
