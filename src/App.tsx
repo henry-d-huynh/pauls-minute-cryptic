@@ -113,19 +113,147 @@ const initialStoryPoints: StoryPoint[] = [
 
 export type AppState = "start" | "play" | "over";
 
+// LocalStorage
+const STORAGE_KEY = "minute-crypt-v1";
+type PersistedState = {
+  indicatorState: HintState;
+  fodderState: HintState;
+  definitionState: HintState;
+  answerState: Answer;
+  isGameOver: boolean[];
+  storyPointState: StoryPoint[];
+};
+
+const DEFAULTS: PersistedState = {
+  indicatorState: "hide",
+  fodderState: "hide",
+  definitionState: "hide",
+  answerState: answer,
+  isGameOver: [],
+  storyPointState: initialStoryPoints,
+};
+
+function isValidPersistedState(value: unknown): value is PersistedState {
+  if (!value) return false;
+  if (typeof value !== "object") return false;
+
+  const hasIndicatorState = "indicatorState" in value;
+  const hasFodderState = "fodderState" in value;
+  const hasDefinitionState = "definitionState" in value;
+  const hasAnswerState = "answerState" in value;
+  const hasIsGameOver = "isGameOver" in value;
+  const hasStoryPointState = "storyPointState" in value;
+
+  if (
+    !hasIndicatorState ||
+    !hasFodderState ||
+    !hasDefinitionState ||
+    !hasAnswerState ||
+    !hasIsGameOver ||
+    !hasStoryPointState
+  ) {
+    return false;
+  }
+
+  const isIndicatorState =
+    typeof value.indicatorState === "string" &&
+    (value.indicatorState === "show" || value.indicatorState === "hide");
+
+  const isFodderState =
+    typeof value.fodderState === "string" &&
+    (value.fodderState === "show" || value.fodderState === "hide");
+
+  const isDefinitionState =
+    typeof value.definitionState === "string" &&
+    (value.definitionState === "show" || value.definitionState === "hide");
+
+  const isAnswerState = Array.isArray(value.answerState);
+
+  const isIsGameOver = Array.isArray(value.isGameOver);
+
+  const isStoryPointState = Array.isArray(value.storyPointState);
+
+  return (
+    isIndicatorState &&
+    isFodderState &&
+    isDefinitionState &&
+    isAnswerState &&
+    isIsGameOver &&
+    isStoryPointState
+  );
+}
+
 const App = (): ReactElement => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [indicatorState, setIndicatorState] = useState<HintState>("hide");
-  const [fodderState, setFodderState] = useState<HintState>("hide");
-  const [definitionState, setDefinitionState] = useState<HintState>("hide");
-  const [answerState, setAnswerState] = useState(answer);
+  const [indicatorState, setIndicatorState] = useState<HintState>(
+    DEFAULTS.indicatorState,
+  );
+  const [fodderState, setFodderState] = useState<HintState>(
+    DEFAULTS.fodderState,
+  );
+  const [definitionState, setDefinitionState] = useState<HintState>(
+    DEFAULTS.definitionState,
+  );
+  const [answerState, setAnswerState] = useState(DEFAULTS.answerState);
   const [cursor, setCursor] = useState(0);
-  const [isGameOver, setIsGameOver] = useState<boolean[]>([]);
+  const [isGameOver, setIsGameOver] = useState<boolean[]>(DEFAULTS.isGameOver);
   const [currentLetterRevealed, setCurrentLetterRevealed] = useState<
     undefined | number
   >(undefined);
-  const [storyPointState, setStoryPointState] = useState(initialStoryPoints);
+  const [storyPointState, setStoryPointState] = useState(
+    DEFAULTS.storyPointState,
+  );
   const [appState, setAppState] = useState<AppState>("start");
+  const [isHydratedFromStorage, setIsHydratedFromStorage] = useState(false);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const resultParse = isValidPersistedState(parsed);
+        if (resultParse) {
+          setIndicatorState(parsed.indicatorState);
+          setFodderState(parsed.fodderState);
+          setDefinitionState(parsed.definitionState);
+          setAnswerState(parsed.answerState);
+          setIsGameOver(parsed.isGameOver);
+          setStoryPointState(parsed.storyPointState);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsHydratedFromStorage(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isHydratedFromStorage) return;
+
+    const payload: PersistedState = {
+      indicatorState,
+      fodderState,
+      definitionState,
+      answerState,
+      isGameOver,
+      storyPointState,
+    };
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [
+    answerState,
+    definitionState,
+    fodderState,
+    indicatorState,
+    isGameOver,
+    isHydratedFromStorage,
+    storyPointState,
+  ]);
 
   const canCheckAnswer = answerState.every(
     (character) => character.input !== "" || character.isRevealed,
