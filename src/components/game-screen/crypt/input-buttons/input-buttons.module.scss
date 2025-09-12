@@ -1,4 +1,4 @@
-$selected-background-colour: rgb(245 209 253);
+$color-pink: rgb(245 209 253);
 $color-yellow: rgb(255 242 177);
 
 .crypt-input {
@@ -30,12 +30,16 @@ $color-yellow: rgb(255 242 177);
       transform: translateY(-0.25rem);
     }
 
-    &-active {
-      background-color: $selected-background-colour;
+    &--active {
+      background-color: $color-pink;
     }
 
-    &-revealed {
+    &--revealed {
       background-color: $color-yellow;
+    }
+
+    &--correct {
+      background-color: $color-pink;
     }
 
     &:first-child {

@@ -49,12 +49,13 @@ type WindowProps = {
 };
 
 const Window = ({ storyPointState }: WindowProps): ReactElement => {
-  const renderStoryPoints = storyPointState.map((storyPoint) => (
+  const renderStoryPoints = storyPointState.map((storyPoint, index) => (
     <div
       className={clsx(styles.points, {
         [styles.pointsHinted]: storyPoint.state === "hinted",
         [styles.pointsRevealed]: storyPoint.state === "revealed",
       })}
+      key={`story-point-${index}`}
     ></div>
   ));
 

@@ -315,13 +315,14 @@ const App = (): ReactElement => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (isGameOver[isGameOver.length - 1]) return;
       setCharacter(event.key);
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [setCharacter]);
+  }, [setCharacter, isGameOver]);
 
   const toggleModal = (isVisible?: boolean) => {
     setIsModalVisible(isVisible || !isModalVisible);

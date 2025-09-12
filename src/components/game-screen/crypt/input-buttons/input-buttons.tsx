@@ -17,10 +17,15 @@ export const InputButtons = ({
   isGameOver,
 }: Props): ReactElement => {
   const [animateShake, setAnimateShake] = useState<boolean>(false);
+  const [isGameOverValue, setGameOverValue] = useState<boolean>(false);
 
   useEffect(() => {
     if (isGameOver.length === 0) return;
-    if (isGameOver[isGameOver.length - 1]) return;
+
+    const isGameOverFinalState = isGameOver[isGameOver.length - 1];
+    setGameOverValue(isGameOverFinalState);
+
+    if (isGameOverFinalState) return;
 
     setAnimateShake(true);
     setTimeout(() => {
@@ -37,6 +42,7 @@ export const InputButtons = ({
         key={`character-${index}`}
         index={index}
         setCursor={setCursor}
+        isGameOverValue={isGameOverValue}
       />
     );
   });
@@ -56,6 +62,7 @@ type InputButtonProps = {
   character: Character;
   isActive: boolean;
   index: number;
+  isGameOverValue: boolean;
   setCursor?: (index: number) => void;
 };
 
@@ -64,6 +71,7 @@ const InputButton = ({
   isActive,
   index,
   setCursor,
+  isGameOverValue,
 }: InputButtonProps): ReactElement => {
   const { expectedLetter, input, isRevealed } = character;
   const renderCharacter = isRevealed ? expectedLetter : input;
@@ -74,11 +82,15 @@ const InputButton = ({
     }
   };
 
+  const isCorrectInput = isGameOverValue && !isRevealed;
+  console.log(isCorrectInput);
+
   return (
     <button
       className={clsx(styles.cryptInputButton, {
         [styles.cryptInputButtonActive]: isActive,
         [styles.cryptInputButtonRevealed]: isRevealed,
+        [styles.cryptInputButtonCorrect]: isCorrectInput,
       })}
       onClick={handleClick}
     >
