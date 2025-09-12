@@ -83,7 +83,6 @@ const InputButton = ({
   };
 
   const isCorrectInput = isGameOverValue && !isRevealed;
-  console.log(isCorrectInput);
 
   return (
     <button
