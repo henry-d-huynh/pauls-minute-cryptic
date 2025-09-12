@@ -111,7 +111,7 @@ const Support = (): ReactElement => {
       </a>
       <p className={styles.supportText}>
         Support this project by watching Not Like Us by Kendrick Lamar. Leave a
-        comment and see no one else's thoughts!
+        comment and see that no one else gives a shit!
       </p>
     </div>
   );
