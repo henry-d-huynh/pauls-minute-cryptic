@@ -400,6 +400,9 @@ const App = (): ReactElement => {
         return startScreen;
       }
       case "play": {
+        if (isGameOver[isGameOver.length - 1]) {
+          return gameOverScreen;
+        }
         return gameScreen;
       }
       case "over": {
