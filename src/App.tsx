@@ -347,18 +347,6 @@ const App = (): ReactElement => {
     setStoryPoint("hinted");
   };
 
-  const renderModal = isModalVisible ? (
-    <Modal
-      toggleModal={toggleModal}
-      setIndicatorState={handleSetIndicatorState}
-      setFodderState={handleSetFodderState}
-      setDefinitionState={handleSetDefinitionState}
-      revealLetter={revealLetter}
-    />
-  ) : (
-    <></>
-  );
-
   const startScreen = <StartScreen setAppState={setAppState} />;
 
   const gameScreen = (
@@ -378,7 +366,14 @@ const App = (): ReactElement => {
         storyPointState={storyPointState}
         setAppState={setAppState}
       />
-      {renderModal}
+      <Modal
+        toggleModal={toggleModal}
+        setIndicatorState={handleSetIndicatorState}
+        setFodderState={handleSetFodderState}
+        setDefinitionState={handleSetDefinitionState}
+        revealLetter={revealLetter}
+        isModalVisible={isModalVisible}
+      />
     </>
   );
 

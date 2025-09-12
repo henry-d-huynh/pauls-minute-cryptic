@@ -4,6 +4,7 @@ import clsx from "clsx";
 import type { HintState } from "../../App.tsx";
 
 type Props = {
+  isModalVisible: boolean;
   toggleModal: (isVisible?: boolean) => void;
   setIndicatorState: (hintState: HintState) => void;
   setFodderState: (state: HintState) => void;
@@ -19,6 +20,7 @@ export const Modal = ({
   setFodderState,
   setDefinitionState,
   revealLetter,
+  isModalVisible,
 }: Props): ReactElement => {
   const [modalState, setModalState] = useState<ModalState>("actions");
 
@@ -64,12 +66,18 @@ export const Modal = ({
   return (
     <div className={styles.modal}>
       <div
-        className={styles.modalOverlay}
+        className={clsx(styles.modalOverlay, {
+          [styles.modalOverlayHide]: !isModalVisible,
+        })}
         onClick={() => {
           toggleModal(false);
         }}
       ></div>
-      <div className={styles.modalDialog}>
+      <div
+        className={clsx(styles.modalDialog, {
+          [styles.modalDialogHide]: !isModalVisible,
+        })}
+      >
         <div className={styles.modalDialogBackground}></div>
         <div className={styles.modalDialogBox}>
           <div className={styles.modalDialogBoxRenderer}>
@@ -216,7 +224,12 @@ const ModalActions = ({
   setFodderState,
   setDefinitionState,
   revealLetter,
-}: ActionProps & Props): ReactElement => {
+}: ActionProps & {
+  setIndicatorState: (hintState: HintState) => void;
+  setFodderState: (state: HintState) => void;
+  setDefinitionState: (state: HintState) => void;
+  revealLetter: () => void;
+}): ReactElement => {
   return (
     <>
       <div className={styles.modalDialogBoxRendererContentHeader}>
