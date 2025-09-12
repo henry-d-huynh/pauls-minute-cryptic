@@ -7,10 +7,10 @@ $color-white: white;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: 1rem;
   align-items: center;
   container-type: inline-size;
   --box: clamp(1px, 100cqmin, 46px);
+  animation: slideUpInput 0.6s ease-out forwards;
 }
 
 .game-screen {
@@ -54,6 +54,7 @@ $color-white: white;
   width: 100%;
   box-shadow: 4px 4px;
   gap: 1rem;
+  animation: slideUp 0.6s ease-out forwards;
 
   &-points {
     display: flex;
@@ -107,6 +108,7 @@ $color-white: white;
   justify-content: center;
   flex-direction: column;
   gap: 0.75rem;
+  animation: slideUp 0.6s ease-out forwards;
 
   &-button {
     width: 168px;
@@ -142,5 +144,27 @@ $color-white: white;
     font-size: 0.875rem;
     line-height: 1.25rem;
     margin: 0;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpInput {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
