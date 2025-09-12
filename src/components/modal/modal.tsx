@@ -1,5 +1,5 @@
 import styles from "./modal.module.scss";
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useEffect, useState } from "react";
 import clsx from "clsx";
 import type { HintState } from "../../App.tsx";
 
@@ -23,6 +23,13 @@ export const Modal = ({
   isModalVisible,
 }: Props): ReactElement => {
   const [modalState, setModalState] = useState<ModalState>("actions");
+
+  useEffect(() => {
+    if (isModalVisible) return;
+    setTimeout(() => {
+      setModalState("actions");
+    }, 600);
+  }, [isModalVisible]);
 
   const getModalContent = () => {
     switch (modalState) {
